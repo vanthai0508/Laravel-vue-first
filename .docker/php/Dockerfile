@@ -6,7 +6,7 @@ COPY .bashrc /root/
 
 # mix
 RUN apt-get update \
-  && apt-get install -y build-essential zlib1g-dev default-mysql-client curl gnupg procps vim git unzip libzip-dev libpq-dev \
+  && apt-get install -y build-essential zlib1g-dev default-mysql-client curl gnupg procps vim git supervisor unzip libzip-dev libpq-dev \
   && docker-php-ext-install zip pdo_mysql pdo_pgsql pgsql
 
 # intl
@@ -47,6 +47,15 @@ ENV COMPOSER_HOME /composer
 ENV PATH $PATH:/composer/vendor/bin
 RUN composer config --global process-timeout 3600
 RUN composer global require "laravel/installer"
+
+
+# RUN apt-get update && apt-get install -y supervisor
+# # Copy Supervisor configuration file
+# COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+# # Start Supervisor
+# CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
+
+COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 WORKDIR /root
 RUN git clone https://github.com/seebi/dircolors-solarized
