@@ -12,7 +12,8 @@ RUN apt-get update \
 # intl
 RUN apt-get install -y libicu-dev \
   && docker-php-ext-configure intl \
-  && docker-php-ext-install intl
+  && docker-php-ext-install intl \
+  && docker-php-ext-install pcntl
 
 # gd
 RUN apt-get install -y libfreetype6-dev libjpeg62-turbo-dev libpng-dev && \
